@@ -1,7 +1,6 @@
 package com.dspcontroles.course5.entities;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.dspcontroles.course5.entities.pk.OrderItemPK;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -67,11 +66,10 @@ public class OrderItem implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
-	}
-	
-	public Double getSubTotal() {
-		return price*quantity;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -83,6 +81,11 @@ public class OrderItem implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItem other = (OrderItem) obj;
-		return Objects.equals(id, other.id);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }

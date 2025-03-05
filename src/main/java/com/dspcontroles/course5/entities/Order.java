@@ -1,9 +1,9 @@
 package com.dspcontroles.course5.entities;
 
 import java.io.Serializable;
+
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import com.dspcontroles.course5.entities.enuns.OrderStatus;
@@ -88,6 +88,10 @@ public class Order implements Serializable{
 	public void setClient(User client) {
 		this.client = client;
 	}
+		
+	public Set<OrderItem> getItems() {
+		return items;
+	}
 	
 		public Payment getPayment() {
 		return payment;
@@ -99,19 +103,10 @@ public class Order implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
-	}
-	
-	public Set<OrderItem> getItems(){
-		return items;
-	}
-	
-	public Double getTotal() {
-		double sum = 0.0;
-		for(OrderItem x : items) {
-			sum += x.getSubTotal();
-		}
-		return sum;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -123,6 +118,11 @@ public class Order implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		return Objects.equals(id, other.id);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }
